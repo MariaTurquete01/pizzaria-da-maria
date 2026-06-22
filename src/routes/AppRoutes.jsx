@@ -21,7 +21,7 @@ const AppRoutes = () => {
                              element = {<HomeFuncionario/>}
                          />
                          <Route
-                             path="/"
+                             path="/home"
                              element = {<HomeFuncionario/>}
                          />
                          <Route

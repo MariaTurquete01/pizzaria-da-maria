@@ -7,6 +7,8 @@ const HomeFuncionario = () => {
 
         <div className="container"> 
             <MenuFuncionario/>
+
+            <p>Home Page Funcionário</p>
         </div>
     )
 }

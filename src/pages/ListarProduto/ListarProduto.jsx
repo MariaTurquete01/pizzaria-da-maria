@@ -1,4 +1,4 @@
-import MenuFuncionario from '../MenuFuncionario'
+import MenuFuncionario from '../MenuFuncionario/MenuFuncionario'
 
 const ListarProduto = () => {
 
@@ -55,6 +55,8 @@ const ListarProduto = () => {
        
         <div className='container'>
                   <MenuFuncionario/>
+                  <p>Lista de produtos</p>
+
         </div>
     )
 }
