@@ -1,7 +1,42 @@
+import React, {useState, useEffect} from "react"
+
+import api from "../../services/api"
 import MenuFuncionario from '../MenuFuncionario/MenuFuncionario'
 
 const ListarProduto = () => {
 
+    //useState: é um hook do react que serve pra armazenar e controlar o estado de uma variável 
+    //composição -> const [ nome da variável, nome função para alterar o valor da variável] = (valor inicial da variável)
+    //Obs: SEMPRE o nome da dunção começa com "set"
+    //Exemplo: Quero declarar uma variável numero cujo valor inicie com 0 
+    //const[numero,setNumero] = (0)
+
+    //useEfect: é um hook que serve para executar códigos que ficam fora do controle direto da renderização visual, os chamados
+    //          "efeitos colaterais". Exemplo:buscar dados em uma API, configurar crônometros, fazer algo quando usuário aperta uma tecla 
+    //composição -> useEffect (função que será executada, [quando esse valor é alterado a função é chamada novamente]) 
+    //Obs: [] manter vazio, quando você quiser que o seu código rode exatamente uma única vez, geralmente ao carregar a página
+
+    
+
+    const[produtos, setProdutos] = useState([])
+
+    useEffect(()=>{
+        api
+        .get("/produtos")
+        .then((response)=>{
+            //deu certo :)
+            //console.log(response.data.data)
+            setProdutos(response.data.data)
+        })
+        .catch((error)=>{
+            //deu ruim :(
+            console.error("Erro ao buscar a lista de produtos. " + error)
+        })
+        
+
+        
+    },[])
+   /*
     const arrayProdutos = [
         {
             id: 1,
@@ -36,7 +71,7 @@ const ListarProduto = () => {
 
             {
             id: 5,
-            nome: "Pizza Qautro Queijos",
+            nome: "Pizza Quatro Queijos",
             precoVenda: 53.90,
             descricao: "Pizza com mistura de quatro queijos"       
 
@@ -50,7 +85,7 @@ const ListarProduto = () => {
         
             }
         ]
-
+*/
     return (
        
         <div className='container'>
@@ -68,7 +103,7 @@ const ListarProduto = () => {
  </thead>
  <tbody>
 
-   { arrayProdutos.map((produto) => ( 
+   { produtos.map((produto) => ( 
  <tr>
  <td style={{ fontSize: "13px" }}>{produto.nome}</td>
  <td style={{ fontSize: "13px" }}>

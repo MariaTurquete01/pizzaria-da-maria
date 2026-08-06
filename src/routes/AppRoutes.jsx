@@ -7,6 +7,7 @@ import {
 from "react-router-dom"
 import HomeFuncionario from "../pages/HomeFuncionario/HomeFuncionario"
 import ListarProduto from "../pages/ListarProduto/ListarProduto"
+import ListarCategoria from "../pages/ListarCategoria/ListarCategoria"
 
 //Browser Router : Utilize com a tag <a> com href -> sempre recarrega toda página 
 //HashRouter: Utilize com a tag <link> do react-router-dom ->carrega apenas as partes necessárias d página, RECOMENDADO 
@@ -27,6 +28,10 @@ const AppRoutes = () => {
                          <Route
                              path="/produtos"
                              element = {<ListarProduto/>}
+                         />
+                         <Route
+                             path="/categorias"
+                             element = {<ListarCategoria/>}
                          />
                  </Routes>
         </HashRouter>
