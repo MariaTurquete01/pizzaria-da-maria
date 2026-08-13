@@ -1,91 +1,88 @@
 import React, {useState, useEffect} from "react"
-
+ 
 import api from "../../services/api"
+ 
+ 
 import MenuFuncionario from '../MenuFuncionario/MenuFuncionario'
-
 const ListarProduto = () => {
-
-    //useState: é um hook do react que serve pra armazenar e controlar o estado de uma variável 
-    //composição -> const [ nome da variável, nome função para alterar o valor da variável] = (valor inicial da variável)
-    //Obs: SEMPRE o nome da dunção começa com "set"
-    //Exemplo: Quero declarar uma variável numero cujo valor inicie com 0 
-    //const[numero,setNumero] = (0)
-
-    //useEfect: é um hook que serve para executar códigos que ficam fora do controle direto da renderização visual, os chamados
-    //          "efeitos colaterais". Exemplo:buscar dados em uma API, configurar crônometros, fazer algo quando usuário aperta uma tecla 
-    //composição -> useEffect (função que será executada, [quando esse valor é alterado a função é chamada novamente]) 
-    //Obs: [] manter vazio, quando você quiser que o seu código rode exatamente uma única vez, geralmente ao carregar a página
-
-    
-
-    const[produtos, setProdutos] = useState([])
-
-    useEffect(()=>{
+ 
+    // useState: é um hook do react que serve para armazenar e controlar o estado de uma variável
+    // composição -> const [ nome da variável, função para alterar o valor da variável ] = (valor inicial da variável)
+    // Obs: SEMPRE o nome da função começa com "set"
+    // Exemplo: Quero declarar uma variável numero cujo valor inicia com 0
+    // const[numero, setNumero] = (0)
+   
+    // useEffect: é um hook que serve para executar códigos que ficam fora do controle direto da renderização visual, os chamados
+    //           "efeitos colaterais". Exemplo: buscar dados em API, configurar cronômetros, fazer algo quando usuário aperta uma tecla
+    // composição ->  useEffect (funçao que será executada, [quando esse valor é alterado a função é chamada novamente])
+    // Obs: [] manter vazio, quando você quiser seu código rode exatamente umna unica vez, geralmente ao carregar a páina
+ 
+    const [produtos, setProdutos] = useState([])
+ 
+    useEffect (() => {
         api
-        .get("/produtos")
-        .then((response)=>{
+        .get ("/produtos")
+        .then ((response) => {
             //deu certo :)
-            //console.log(response.data.data)
+            console.log(response.data.data)
             setProdutos(response.data.data)
         })
-        .catch((error)=>{
+ 
+        .catch((error) => {
             //deu ruim :(
             console.error("Erro ao buscar a lista de produtos. " + error)
         })
-        
-
-        
-    },[])
-   /*
-    const arrayProdutos = [
+    })
+ 
+   /* const arrayProdutos = [
         {
             id: 1,
             nome: "Pizza de Calabresa",
             precoVenda: 54.90,
             descricao: "Pizza de calabresa com cebola e azeitonas sem caroço"
         },        
-    
+   
             {
             id: 2,
             nome: "Pizza de Frango com Catupiry",
             precoVenda: 49.90,
             descricao: "Pizza de frango desfiado com Catupiry"
-              
+             
             },
-
+ 
             {
             id: 3,
             nome: "Pizza Portuguesa",
             precoVenda: 52.90,
             descricao: "Pizza com presunto, ovos, cebola e ervilha"
-              
+             
             },
-
+ 
             {
             id: 4,
             nome: "Pizza Mussarela",
             precoVenda: 44.90,
             descricao: "Pizza tradicional de Mussarela"
-            
+           
             },
-
+ 
             {
             id: 5,
             nome: "Pizza Quatro Queijos",
             precoVenda: 53.90,
-            descricao: "Pizza com mistura de quatro queijos"       
-
+            descricao: "Pizza com mistura de quatro queijos"      
+ 
             },
-
+ 
             {
             id: 6,
             nome: "Pizza Marguerita",
             precoVenda: 47.90,
             descricao: "Pizza de marguerita com tomate e manjericão"
-        
+       
             }
-        ]
-*/
+        ]*/
+ 
     return (
        
         <div className='container'>
@@ -102,8 +99,8 @@ const ListarProduto = () => {
  </tr>
  </thead>
  <tbody>
-
-   { produtos.map((produto) => ( 
+ 
+   { produtos.map((produto) => (
  <tr>
  <td style={{ fontSize: "13px" }}>{produto.nome}</td>
  <td style={{ fontSize: "13px" }}>
@@ -113,10 +110,10 @@ const ListarProduto = () => {
             currency: "BRL",
         }).format(produto.precoVenda)
     }
-
-    
-
-
+ 
+   
+ 
+ 
  </td>
  <td style={{ fontSize: "13px" }}>{produto.descricao}</td>
  <td className="text-center fs-6" style={{ width: "100px" }}>
@@ -135,10 +132,10 @@ const ListarProduto = () => {
  </td>
  </tr>
  
-   ) ) } 
-
-
-
+   ) ) }
+ 
+ 
+ 
  
  </tbody>
  </table>
@@ -146,5 +143,6 @@ const ListarProduto = () => {
         </div>
     )
 }
-
+ 
 export default ListarProduto
+ 
