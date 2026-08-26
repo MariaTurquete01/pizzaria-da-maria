@@ -50,7 +50,7 @@ const ListarCategoria = () => {
     <div className="container">
       <MenuFuncionario />
 
-      <h3 className="mt-3 mb-3">Lista de Produtos</h3>
+      <h3 className="mt-3 mb-3">Lista de Categoria do Produto</h3>
 
       <div className="table-responsive">
         <table className="table table-bordered table-striped table-hover">

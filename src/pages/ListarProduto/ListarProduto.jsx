@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react"
  
+import { Link } from "react-router-dom"
+
 import api from "../../services/api"
- 
- 
 import MenuFuncionario from '../MenuFuncionario/MenuFuncionario'
+
 const ListarProduto = () => {
  
     // useState: é um hook do react que serve para armazenar e controlar o estado de uma variável
@@ -137,8 +138,19 @@ const ListarProduto = () => {
  
  
  
- </tbody>
- </table>
+            </tbody>
+        </table>
+ </div>
+
+ <div className="text-end mt-3">
+    <Link
+    to="/produtos/novo"
+    className={`btn btn-sucess`}
+    >
+        <i className="fas fa-plus"></i>
+        Novo Produto
+    </Link>
+
  </div>
         </div>
     )
