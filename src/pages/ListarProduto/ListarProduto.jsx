@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react"
 import { Link } from "react-router-dom"
 
 import api from "../../services/api"
+import CredentialUser from "../../components/CredentialUser"
 import MenuFuncionario from '../MenuFuncionario/MenuFuncionario'
 
 const ListarProduto = () => {
@@ -33,9 +34,11 @@ const ListarProduto = () => {
             //deu ruim :(
             console.error("Erro ao buscar a lista de produtos. " + error)
         })
-    })
+    },[])
+
+    /*
  
-   /* const arrayProdutos = [
+   const arrayProdutos = [
         {
             id: 1,
             nome: "Pizza de Calabresa",
@@ -82,13 +85,14 @@ const ListarProduto = () => {
             descricao: "Pizza de marguerita com tomate e manjericão"
        
             }
-        ]*/
- 
+        ]
+ */
     return (
        
         <div className='container'>
                   <MenuFuncionario/>
-                  <p>Lista de produtos</p>
+                  <CredentialUser title="Lista de Produtos"/>
+                  
 <div className="table-responsive">
  <table className="table table-bordered table-striped table-hover">
  <thead className="table-success">

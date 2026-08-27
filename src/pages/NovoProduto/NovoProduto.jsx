@@ -2,12 +2,17 @@ import React, {useState, useEffect} from "react"
 
 import MenuFuncionario from "../MenuFuncionario/MenuFuncionario"
 import api from "../../services/api"
- 
+import CredentialUser from "../../components/CredentialUser"
+
 const NovoProduto = () => {
 
      const [categorias, setCategorias] = useState([])
 
      const [categoriaId, setCategoriaId] = useState("")
+     
+     const [nome, setNome] = useState("")
+     const [precoVenda, setPrecoVenda] = useState("")
+     const [descricao, setDescricao] = useState("")
      
     useEffect( ( ) =>{
         api
@@ -23,55 +28,80 @@ const NovoProduto = () => {
     const escolherCategoria = (e) =>{
         setCategoriaId(e.target.value)
     }
+
+    const enviarProduto = async (e) => {
+        e.preventDefault(); // cancela o reload da página após o envio 
+
+        const produto = {
+            nome: nome,
+            precoVenda: parseFloat(precoVenda),
+            tipo: "Grande",
+            descricao: descricao,
+            categoriaId: Number(categoriaId)
+        }
+    try { 
+        const response = await api.post("/produtos", produto, {
+            "Content-Type" : "application/json"
+        })
+        alert(`${response.data.data.nome} cadastrado com sucesso!`)
+        // Limpando os campos
+        setNome("")
+        setPrecoVenda("")
+        setDescricao("")
+    }catch (error){
+        console.error(`Não foi possível salvar o produto ${error}`)
+    }
+ }
     
+
     return (
         <div className="container">
         <MenuFuncionario/>
- 
-        <form className="container-fluid p-4">
+        <CredentialUser title="Cadastro de Produto"/>
+        
+        <form onSubmit={enviarProduto} className="container-fuid p-4">
 <div className="mb-3">
 <label className="form-label">Nome:</label>
 <input
- 
-type="text"
- 
-className="form-control"
- 
-required
- 
-/>
+    type="text"
+    className="form-control"
+    value={nome}
+    onChange={(e)=> setNome(e.target.value)}
+    required
+    />
 </div>
+
 <div className="mb-3">
 <label className="form-label">Preço:</label>
 <input
- 
-type="text"
- 
-className="form-control"
- 
-required
- 
-/>
+    type="text"
+    className="form-control"
+    value={precoVenda}
+    onChange={(e)=> setPrecoVenda(e.target.value)}
+    required
+    />
 </div>
+
 <div className="mb-3">
 <label className="form-label">Descrição:</label>
 <textarea
- 
-className="form-control"
- 
-rows="3"
- 
-required
-></textarea>
+    className="form-control"
+    value={descricao}
+    onChange={(e)=> setDescricao(e.target.value)}
+    rows="3"
+    required
+    ></textarea>
 </div>
+
 <div className="mb-3">
 <label className="block mb-1 font-semibold">Categoria:</label>
 <select
- 
-className="border p-2 w-full rounded"
- 
-required
+    value={categoriaId}
+    onChange={escolherCategoria}
+    className="border p-2 w-full rounded"
+    required
 >
+
 <option value="">Selecione uma categoria</option>
 {
     categorias
