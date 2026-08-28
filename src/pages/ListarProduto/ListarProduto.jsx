@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
  
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import api from "../../services/api"
 import Modal from "../../components/Modal"
@@ -24,6 +24,8 @@ const ListarProduto = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [idProdutoAExcluir, setIdProdutoAExcluir] = useState(null)
+
+    const navigate = useNavigate();
 
   // useState: é um hook do react que serve para armazenar e controlar o estado de uma variável
     // composição -> const [ nome da variável, função para alterar o valor da variável ] = (valor inicial da variável)
@@ -143,7 +145,7 @@ const ListarProduto = () => {
  <tbody>
  
    { produtos.map((produto) => (
- <tr>
+ <tr key={produto.id}>
  <td style={{ fontSize: "13px" }}>{produto.nome}</td>
  <td style={{ fontSize: "13px" }}>
     {
@@ -161,7 +163,10 @@ const ListarProduto = () => {
  <td className="text-center fs-6" style={{ width: "100px" }}>
  {/* Botão de Editar */}
  <button
- className="btn btn-sm btn-primary me-2">
+ className="btn btn-sm btn-primary me-2"
+ onClick={() =>
+    navigate(`/produtos/editar/${produto.id}`)
+ }>
  <i className="fas fa-pencil-alt"></i>{" "}
  {/* Ícone de editar */}
  </button>
@@ -188,8 +193,8 @@ const ListarProduto = () => {
  <div className="text-end mt-3">
     <Link
     to="/produtos/novo"
-    className={`btn btn-sucess`}
-    >
+    className={`btn btn-success`}
+    > 
         <i className="fas fa-plus"></i>
         Novo Produto
     </Link>
