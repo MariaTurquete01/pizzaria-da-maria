@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react"
 import { Link } from "react-router-dom"
 
 import api from "../../services/api"
+import Modal from "../../components/Modal"
 import CredentialUser from "../../components/CredentialUser"
 import MenuFuncionario from '../MenuFuncionario/MenuFuncionario'
 
@@ -20,6 +21,20 @@ const ListarProduto = () => {
     // Obs: [] manter vazio, quando você quiser seu código rode exatamente umna unica vez, geralmente ao carregar a páina
  
     const [produtos, setProdutos] = useState([])
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [idProdutoAExcluir, setIdProdutoAExcluir] = useState(null)
+
+  // useState: é um hook do react que serve para armazenar e controlar o estado de uma variável
+    // composição -> const [ nome da variável, função para alterar o valor da variável ] = (valor inicial da variável)
+    // Obs: SEMPRE o nome da função começa com "set"
+    // Exemplo: Quero declarar uma variável numero cujo valor inicia com 0
+    // const[numero, setNumero] = (0)
+   
+    // useEffect: é um hook que serve para executar códigos que ficam fora do controle direto da renderização visual, os chamados
+    //           "efeitos colaterais". Exemplo: buscar dados em API, configurar cronômetros, fazer algo quando usuário aperta uma tecla
+    // composição ->  useEffect (funçao que será executada, [quando esse valor é alterado a função é chamada novamente])
+    // Obs: [] manter vazio, quando você quiser seu código rode exatamente umna unica vez, geralmente ao carregar a páina
  
     useEffect (() => {
         api
@@ -35,6 +50,28 @@ const ListarProduto = () => {
             console.error("Erro ao buscar a lista de produtos. " + error)
         })
     },[])
+
+
+    const openModal = (id) =>{
+        setIdProdutoAExcluir(id)
+        setIsModalOpen(true)
+    }
+
+    const deleteProduto = async () => {
+        try{
+            const response = await api.delete(`/produtos/${idProdutoAExcluir}`)
+            alert(response.data.message)
+
+            setProdutos((produtosAtuais) =>
+            produtosAtuais.filter(
+                (produto) => produto.id !== idProdutoAExcluir
+                )
+            )
+        }catch (error){
+            alert(`Não foi possível a exclusão do produto com o id ${idProdutoAExcluir}`)
+        }
+        setIsModalOpen(false)
+    }
 
     /*
  
@@ -130,7 +167,9 @@ const ListarProduto = () => {
  </button>
  {/* Botão de Excluir */}
  <button
- className="btn btn-sm btn-danger">
+ className="btn btn-sm btn-danger"
+ onClick={() => openModal(produto.id)}
+ >
  <i className="fas fa-trash-alt"></i>{" "}
  {/* Ícone de excluir */}
  </button>
@@ -156,6 +195,12 @@ const ListarProduto = () => {
     </Link>
 
  </div>
+
+ <Modal
+    isOpen={isModalOpen}
+    onClose={()=> setIsModalOpen(false)}
+    onConfirm={deleteProduto}
+    />
         </div>
     )
 }
